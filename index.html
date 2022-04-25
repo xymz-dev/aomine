@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Aomine </></title> 
+  <link rel="stylesheet" href="style.css"> 
+  <link href="https://fonts.googleapis.com/css?family=Oswald&amp;display=swap" rel="stylesheet"> 
+ </head> 
+ <body>
+  <style>
+</style>
+  <div id="gsTitle">
+    <div class="glitch-wrapper">
+    <div class="glitch-text">
+   <div class="gsTitle-title"></div> 
+   <div class="gsTitle-title gsTitle-color gsTitle-a"></div> 
+   <div class="gsTitle-title gsTitle-color gsTitle-b"></div>
+    </div>
+    </div>
+  </div> 
+  <script>
+	const gsTitle = {
+  init() {
+    this._root = document.querySelector( "#gsTitle" );
+    this._titles = this._root.querySelectorAll( ".gsTitle-title" );
+    this._frame = this._frame.bind( this );
+    this.setTexts( [
+     "Hello Aomine's", 
+     "hELLo AoMInE'S ¡",
+     "𝙷𝚎𝚕𝚕𝚘 𝙰𝚘𝚖𝚒𝚗𝚎'𝚜",
+     "𝓗𝓮𝓵𝓵𝓸 𝓐𝓸𝓶𝓲𝓷𝓮'𝓼 ¡",
+     "🅷🅴🅻🅻🅾 🅰🅾🅼🅸🅽🅴'🆂 ¡",
+     "こんにちは 西姆兹 ¡",
+      
+    ] );
+  },
+  on() {
+    if ( !this._frameId ) {
+      this._frame();
+    }
+  },
+  off() {
+    clearTimeout( this._frameId );
+    this._textContent( this._text );
+    delete this._frameId;
+  },
+  setTexts( [ text, ...alt ] ) {
+    this._text = text;
+    this._textAlt = alt;
+  },
+
+  // private:
+  _text: "",
+  _textAlt: [],
+  _rand( n ) {
+    return Math.random() * n | 0;
+  },
+  _textContent( txt ) {
+    this._titles.forEach( el => el.textContent = txt );
+  },
+  _frame() {
+    const txt = Array.from( this._text );
+
+    for ( let i = 0; i < 6; ++i ) {
+      const ind = this._rand( this._text.length );
+
+      txt[ ind ] = this._textAlt[ this._rand( this._textAlt.length ) ][ ind ];
+    }
+    this._textContent( txt.join( "" ) );
+    this._root.classList.add( "gsTitle-glitched" );
+    setTimeout( () => {
+      this._textContent( this._text );
+      this._root.classList.remove( "gsTitle-glitched" );
+    }, 50 + Math.random() * 200 );
+    this._frameId = setTimeout( this._frame, 250 + Math.random() * 500 );
+  },
+};
+
+gsTitle.init();
+gsTitle.on();
+</script> 
+<script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+<script src="liff-starter.js"></script>
+ </body>
+</html>
